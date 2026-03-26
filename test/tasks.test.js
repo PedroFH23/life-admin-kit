@@ -53,3 +53,28 @@ test('fail getById if task does not exist', () => {
         service.getById('missing-id');
     });
 });
+
+test('update task', () => {
+    const storage = new MemoryStorage();
+    const service = new TaskService(storage);
+
+    const created = service.create({ title: 'Old title' });
+    const updated = service.update(created.id, {
+        title: 'New title',
+        dueDate: '2026-03-27T10:00:00.000Z',
+        priority: 'high',
+    });
+
+    assert.equal(updated.title, 'New title');
+    assert.equal(updated.dueDate, '2026-03-27T10:00:00.000Z');
+    assert.equal(updated.priority, 'high');
+});
+
+test('fail update if task does not exist', () => {
+    const storage = new MemoryStorage();
+    const service = new TaskService(storage);
+
+    assert.throws(() => {
+        service.update('missing-id', { title: 'Updated' });
+    });
+});
