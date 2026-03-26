@@ -1,10 +1,7 @@
-import {
-    TaskService,
-    MemoryStorage
-} from './src/index.js';
+import { TaskService, FileStorage } from './src/index.js';
 
-const tasks = new TaskService(new MemoryStorage());
+const tasks = new TaskService(new FileStorage('./tasks.json'));
 
-tasks.create({ title: 'Test real' });
+tasks.create({ title: 'Persist test' });
 
 console.log(tasks.getAll());
