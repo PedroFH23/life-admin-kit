@@ -4,34 +4,46 @@ Minimal headless library to manage tasks, reminders and daily summaries.
 
 ## Installation
 
-Clone the repo or copy the modules.
+Clone the repository or copy the modules into your project.
 
 ## Usage
 
 ```js
-import {
-  TaskService,
-  ReminderService,
-  DailySummaryService,
-  MemoryStorage
-} from './src/index.js';
+import { createLifeAdminKit } from 'life-admin-kit';
 
-const tasks = new TaskService(new MemoryStorage());
-const reminders = new ReminderService(new MemoryStorage());
-const summary = new DailySummaryService(tasks, reminders);
+const kit = createLifeAdminKit();
 
-tasks.create({ title: 'Pay bill' });
+kit.tasks.create({ title: 'Pay bill' });
 
-console.log(tasks.getAll());
-console.log(summary.getTodaySummary());
-``` 
+console.log(kit.tasks.getAll());
+console.log(kit.summary.getTodaySummary());
+```
 
 ## Modules
+
 - TaskService
 - ReminderService
 - DailySummaryService
 - MemoryStorage
+- FileStorage
+- createLifeAdminKit
+- exportToJson
+- importFromJson
+- exportKitData
+- importKitData
 
-## Run Tests
+## Features
 
+- Task management
+- Reminder management
+- Daily summary generation
+- Memory storage
+- File storage
+- JSON export/import
+- Kit factory helper
+
+## Run tests
+
+```bash
 npm test
+```

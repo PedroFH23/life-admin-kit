@@ -1,6 +1,35 @@
 {
+    "name": "life-admin-kit",
+    "version": "0.1.0",
+    "description": "Minimal headless library to manage tasks, reminders and daily summaries",
     "type": "module",
+    "main": "./src/index.js",
+    "exports": {
+        ".": "./src/index.js"
+    },
+    "files": [
+        "src",
+        "README.md",
+        "LICENSE"
+    ],
     "scripts": {
         "test": "node --test"
-    }
+    },
+    "keywords": [
+        "tasks",
+        "reminders",
+        "productivity",
+        "headless",
+        "library"
+    ],
+    "author": "Pedro Fernández",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/PedroFH23/life-admin-kit.git"
+    },
+    "homepage": "https://github.com/PedroFH23/life-admin-kit#readme",
+    "bugs": {
+        "url": "https://github.com/PedroFH23/life-admin-kit/issues"
+    },
+    "license": "MIT"
 }

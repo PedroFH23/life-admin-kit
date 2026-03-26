@@ -1,4 +1,5 @@
 import { exportToJson, importFromJson } from './json-portability.js';
+import { validateImportedKitData } from './validators.js';
 
 export function exportKitData(kit) {
   return exportToJson({
@@ -8,16 +9,14 @@ export function exportKitData(kit) {
 }
 
 export function importKitData(kit, jsonString) {
-  const data = importFromJson(jsonString);
+  const rawData = importFromJson(jsonString);
+  const data = validateImportedKitData(rawData);
 
-  const tasks = Array.isArray(data.tasks) ? data.tasks : [];
-  const reminders = Array.isArray(data.reminders) ? data.reminders : [];
-
-  kit.tasks.storage.saveAll(tasks);
-  kit.reminders.storage.saveAll(reminders);
+  kit.tasks.storage.saveAll(data.tasks);
+  kit.reminders.storage.saveAll(data.reminders);
 
   return {
-    tasksImported: tasks.length,
-    remindersImported: reminders.length,
+    tasksImported: data.tasks.length,
+    remindersImported: data.reminders.length,
   };
 }
