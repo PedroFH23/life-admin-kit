@@ -8,14 +8,16 @@ export function createLifeAdminKit(options = {}) {
     const {
         storage = 'memory',
         path = './life-admin-kit.json',
+        tasksPath = './tasks.json',
+        remindersPath = './reminders.json',
     } = options;
 
     let taskStorage;
     let reminderStorage;
 
     if (storage === 'file') {
-        taskStorage = new FileStorage(path);
-        reminderStorage = new FileStorage(path);
+        taskStorage = new FileStorage(tasksPath || path);
+        reminderStorage = new FileStorage(remindersPath || path);
     } else {
         taskStorage = new MemoryStorage();
         reminderStorage = new MemoryStorage();

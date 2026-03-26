@@ -1,4 +1,6 @@
 tasks.json
-test-tasks.json
-playground.js
+reminders.json
+test-tasks-factory.json
+test-reminders-factory.json
+*.tgz
 .DS_Store

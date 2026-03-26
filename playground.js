@@ -1,23 +1,16 @@
-import {
-    createLifeAdminKit,
-    exportKitData,
-    importKitData,
-} from './src/index.js';
+import { createLifeAdminKit } from './src/index.js';
 
-const kit1 = createLifeAdminKit();
+const kit = createLifeAdminKit({
+    storage: 'file',
+    tasksPath: './tasks.json',
+    remindersPath: './reminders.json',
+});
 
-kit1.tasks.create({ title: 'Buy groceries' });
-kit1.reminders.create({
-    title: 'Doctor appointment',
+kit.tasks.create({ title: 'Separated task storage' });
+kit.reminders.create({
+    title: 'Separated reminder storage',
     remindAt: new Date().toISOString(),
 });
 
-const exported = exportKitData(kit1);
-console.log(exported);
-
-const kit2 = createLifeAdminKit();
-const result = importKitData(kit2, exported);
-
-console.log(result);
-console.log(kit2.tasks.getAll());
-console.log(kit2.reminders.getAll());
+console.log('Tasks:', kit.tasks.getAll());
+console.log('Reminders:', kit.reminders.getAll());
