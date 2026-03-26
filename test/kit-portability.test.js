@@ -56,3 +56,16 @@ test('importKitData imports empty arrays when fields are missing', () => {
   assert.equal(kit.tasks.getAll().length, 0);
   assert.equal(kit.reminders.getAll().length, 0);
 });
+
+test('importKitData throws when JSON contains invalid task data', () => {
+  const kit = createLifeAdminKit();
+
+  const json = JSON.stringify({
+    tasks: [{ id: '', title: 'Broken task', status: 'pending' }],
+    reminders: [],
+  });
+
+  assert.throws(() => {
+    importKitData(kit, json);
+  });
+});
