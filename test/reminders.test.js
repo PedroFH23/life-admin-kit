@@ -42,3 +42,28 @@ test('fail with invalid date', () => {
         });
     });
 });
+
+test('update reminder', () => {
+    const storage = new MemoryStorage();
+    const service = new ReminderService(storage);
+
+    const created = service.create({
+        title: 'Old reminder',
+        remindAt: new Date().toISOString(),
+    });
+
+    const updated = service.update(created.id, {
+        title: 'New reminder',
+    });
+
+    assert.equal(updated.title, 'New reminder');
+});
+
+test('fail update if reminder does not exist', () => {
+    const storage = new MemoryStorage();
+    const service = new ReminderService(storage);
+
+    assert.throws(() => {
+        service.update('missing-id', { title: 'Updated' });
+    });
+});
