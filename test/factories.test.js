@@ -18,3 +18,16 @@ test('createLifeAdminKit returns initialized services', () => {
     assert.equal(kit.reminders.getAll().length, 1);
     assert.ok(summary);
 });
+
+test('createLifeAdminKit supports file storage', () => {
+    const kit = createLifeAdminKit({
+        storage: 'file',
+        path: './test-data.json',
+    });
+
+    kit.tasks.create({ title: 'File task' });
+
+    const tasks = kit.tasks.getAll();
+
+    assert.equal(tasks.length, 1);
+});
