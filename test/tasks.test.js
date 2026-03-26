@@ -33,3 +33,23 @@ test('fail if task does not exist', () => {
         service.complete('invalid-id');
     });
 });
+
+test('get task by id', () => {
+    const storage = new MemoryStorage();
+    const service = new TaskService(storage);
+
+    const created = service.create({ title: 'Find me' });
+    const found = service.getById(created.id);
+
+    assert.equal(found.id, created.id);
+    assert.equal(found.title, 'Find me');
+});
+
+test('fail getById if task does not exist', () => {
+    const storage = new MemoryStorage();
+    const service = new TaskService(storage);
+
+    assert.throws(() => {
+        service.getById('missing-id');
+    });
+});
