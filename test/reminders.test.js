@@ -67,3 +67,26 @@ test('fail update if reminder does not exist', () => {
         service.update('missing-id', { title: 'Updated' });
     });
 });
+
+test('get reminders by date range', () => {
+    const storage = new MemoryStorage();
+    const service = new ReminderService(storage);
+
+    service.create({
+        title: 'Reminder 1',
+        remindAt: '2026-03-26T10:00:00.000Z',
+    });
+
+    service.create({
+        title: 'Reminder 2',
+        remindAt: '2026-03-30T10:00:00.000Z',
+    });
+
+    const results = service.getByDateRange(
+        '2026-03-25T00:00:00.000Z',
+        '2026-03-27T23:59:59.000Z'
+    );
+
+    assert.equal(results.length, 1);
+    assert.equal(results[0].title, 'Reminder 1');
+});
