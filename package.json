@@ -1,6 +1,6 @@
 {
     "name": "life-admin-kit",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "description": "Minimal headless library to manage tasks, reminders and daily summaries",
     "type": "module",
     "main": "./src/index.js",
