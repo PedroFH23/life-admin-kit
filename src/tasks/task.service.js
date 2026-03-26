@@ -26,6 +26,43 @@ export class TaskService {
         return this.storage.getAll();
     }
 
+    getById(taskId) {
+        const tasks = this.storage.getAll();
+        const task = tasks.find((item) => item.id === taskId);
+
+        if (!task) {
+            throw new NotFoundError('Task not found');
+        }
+
+        return task;
+    }
+
+    update(taskId, input) {
+        const tasks = this.storage.getAll();
+        const task = tasks.find((item) => item.id === taskId);
+
+        if (!task) {
+            throw new NotFoundError('Task not found');
+        }
+
+        if (input.title !== undefined) {
+            validateRequiredString(input.title, 'title');
+            task.title = input.title.trim();
+        }
+
+        if (input.dueDate !== undefined) {
+            validateOptionalDate(input.dueDate, 'dueDate');
+            task.dueDate = input.dueDate;
+        }
+
+        if (input.priority !== undefined) {
+            task.priority = input.priority;
+        }
+
+        this.storage.saveAll(tasks);
+        return task;
+    }
+
     getPending() {
         return getPendingTasks(this.storage.getAll());
     }
@@ -60,4 +97,16 @@ export class TaskService {
         this.storage.saveAll(next);
         return true;
     }
-}
+
+    getByDateRange(startDate, endDate) {
+        const tasks = this.storage.getAll();
+
+        return tasks.filter((task) => {
+            if (!task.dueDate) return false;
+
+            const date = new Date(task.dueDate).getTime();
+            return date >= new Date(startDate).getTime() &&
+                date <= new Date(endDate).getTime();
+        });
+    }
+}   

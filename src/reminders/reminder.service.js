@@ -60,4 +60,38 @@ export class ReminderService {
         this.storage.saveAll(next);
         return true;
     }
+
+    update(reminderId, input) {
+        const reminders = this.storage.getAll();
+        const reminder = reminders.find((item) => item.id === reminderId);
+
+        if (!reminder) {
+            throw new NotFoundError('Reminder not found');
+        }
+
+        if (input.title !== undefined) {
+            validateRequiredString(input.title, 'title');
+            reminder.title = input.title.trim();
+        }
+
+        if (input.remindAt !== undefined) {
+            validateOptionalDate(input.remindAt, 'remindAt');
+            reminder.remindAt = input.remindAt;
+        }
+
+        this.storage.saveAll(reminders);
+        return reminder;
+    }
+
+    getByDateRange(startDate, endDate) {
+        const reminders = this.storage.getAll();
+
+        return reminders.filter((reminder) => {
+            if (!reminder.remindAt) return false;
+
+            const date = new Date(reminder.remindAt).getTime();
+            return date >= new Date(startDate).getTime() &&
+                date <= new Date(endDate).getTime();
+        });
+    }
 }
