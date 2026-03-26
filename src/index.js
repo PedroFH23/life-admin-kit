@@ -5,3 +5,4 @@ export { MemoryStorage } from './storage/memory.storage.js';
 export { FileStorage } from './storage/file.storage.js';
 export { createLifeAdminKit } from './factories/create-services.js';
 export { exportToJson, importFromJson } from './portability/json-portability.js';
+export { exportKitData, importKitData } from './portability/kit-portability.js';
